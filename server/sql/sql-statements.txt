@@ -1,0 +1,52 @@
+DROP TABLE IF EXISTS Users;
+DROP TABLE IF EXISTS Persons;
+DROP TABLE IF EXISTS Events;
+DROP TABLE IF EXISTS AuthToken;
+
+CREATE TABLE "Users" (
+  "Username" varchar(255) NOT NULL,
+  "Password" varchar(255) NOT NULL,
+  "Email" varchar(255) NOT NULL,
+  "First_Name" varchar(255) NOT NULL,
+  "Last_Name" varchar(255) NOT NULL,
+  "Gender" varchar(255) NOT NULL,
+  "Person_ID" varchar(255) NOT NULL,
+  PRIMARY KEY("Username")
+);
+
+
+CREATE TABLE "Persons" (
+  "Person_ID" varchar(255) NOT NULL,
+  "Username" varchar(255) NOT NULL,
+  "First_Name" varchar(255) NOT NULL,
+  "Last_Name" varchar(255) NOT NULL,
+  "Gender" varchar(255) NOT NULL,
+  "Father_ID" int,
+  "Mother_ID" int,
+  "Spouse_ID" int,
+  PRIMARY KEY("Person_ID")
+);
+
+
+CREATE TABLE "Events" (
+  "EventID" varchar(255) NOT NULL UNIQUE,
+  "AssociatedUsername" varchar(255) NOT NULL,
+  "PersonID" varchar(255) NOT NULL,
+  "Latitude" float NOT NULL,
+  "Longitude" float NOT NULL,
+  "Country" varchar(255) NOT NULL,
+  "City" varchar(255) NOT NULL,
+  "EventType" varchar(255) NOT NULL,
+  "Year" int NOT NULL,
+  PRIMARY KEY("EventID"),
+  FOREIGN KEY("AssociatedUsername") REFERENCES "Users"("Username"),
+  FOREIGN KEY("PersonID") REFERENCES "Persons"("PersonID")
+);
+
+
+CREATE TABLE "AuthToken" (
+  "Username" varchar(255) NOT NULL,
+  "Auth_Token" varchar(255) NOT NULL UNIQUE,
+  PRIMARY KEY("Username")
+);
+
